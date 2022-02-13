@@ -235,20 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b54e080ba014baaaf7b9d5e5c71492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyPoints:
-  - {fileID: 1828601335}
-  - {fileID: 1464731257}
-  - {fileID: 1823593277}
-  - {fileID: 648330470}
-  - {fileID: 809479248}
-  - {fileID: 203877454}
-  - {fileID: 1027533883}
-  - {fileID: 282123194}
-  - {fileID: 738329838}
-  - {fileID: 1138646764}
-  - {fileID: 229908205}
-  - {fileID: 1967731936}
-  - {fileID: 918237448}
   WholeBody: {fileID: 74151461}
   textright: {fileID: 747546958}
   textleft: {fileID: 65284395}
@@ -948,9 +934,6 @@ MonoBehaviour:
   blue: {fileID: 2100000, guid: 5e38fb0806ecdab469a48343b33a7772, type: 2}
   yellow: {fileID: 2100000, guid: 1684f4ec8c5b3a44a816a93d18717485, type: 2}
   black: {fileID: 2100000, guid: ede34ac3615ae834cb60ab2b59f9cdad, type: 2}
-  Colors: []
-  buttons: []
-  positions: []
 --- !u!23 &188713805
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1307,21 +1290,6 @@ MonoBehaviour:
   blue: {fileID: 2100000, guid: 5e38fb0806ecdab469a48343b33a7772, type: 2}
   yellow: {fileID: 2100000, guid: 1684f4ec8c5b3a44a816a93d18717485, type: 2}
   black: {fileID: 2100000, guid: ede34ac3615ae834cb60ab2b59f9cdad, type: 2}
-  Colors:
-  - {fileID: 1196372685}
-  - {fileID: 2031647776}
-  - {fileID: 185418644}
-  - {fileID: 1739138186}
-  - {fileID: 1781176422}
-  - {fileID: 866154826}
-  buttons:
-  - {fileID: 1213568924}
-  - {fileID: 374659140}
-  - {fileID: 1928795650}
-  - {fileID: 596513216}
-  - {fileID: 151237583}
-  - {fileID: 1650357799}
-  positions: []
 --- !u!54 &203877460
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3961,21 +3929,6 @@ MonoBehaviour:
   blue: {fileID: 2100000, guid: 5e38fb0806ecdab469a48343b33a7772, type: 2}
   yellow: {fileID: 2100000, guid: 1684f4ec8c5b3a44a816a93d18717485, type: 2}
   black: {fileID: 2100000, guid: ede34ac3615ae834cb60ab2b59f9cdad, type: 2}
-  Colors:
-  - {fileID: 1196372685}
-  - {fileID: 2031647776}
-  - {fileID: 185418644}
-  - {fileID: 1739138186}
-  - {fileID: 1781176422}
-  - {fileID: 866154826}
-  buttons:
-  - {fileID: 1213568924}
-  - {fileID: 374659140}
-  - {fileID: 1928795650}
-  - {fileID: 596513216}
-  - {fileID: 151237583}
-  - {fileID: 1650357799}
-  positions: []
 --- !u!54 &1027533889
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4369,6 +4322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1196372686}
   - component: {fileID: 1196372689}
+  - component: {fileID: 1196372691}
   - component: {fileID: 1196372688}
   - component: {fileID: 1196372690}
   - component: {fileID: 1196372687}
@@ -4480,6 +4434,20 @@ MonoBehaviour:
   blue: {fileID: 2100000, guid: 5e38fb0806ecdab469a48343b33a7772, type: 2}
   yellow: {fileID: 2100000, guid: 1684f4ec8c5b3a44a816a93d18717485, type: 2}
   black: {fileID: 2100000, guid: ede34ac3615ae834cb60ab2b59f9cdad, type: 2}
+--- !u!114 &1196372691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196372685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2e09d77dfe3224693eaea39b74eb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shoulder: {fileID: 0}
+  shoulderDistance: {fileID: 0}
 --- !u!1 &1213568924
 GameObject:
   m_ObjectHideFlags: 0

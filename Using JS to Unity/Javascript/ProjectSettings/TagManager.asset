@@ -11,6 +11,8 @@ TagManager:
   - Pink
   - Black
   - Yellow
+  - color
+  - Size
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DataReceiver : MonoBehaviour
 {
-    public GameObject[] keyPoints = new GameObject[12];
+    public static GameObject[] keyPoints = new GameObject[12];
     public GameObject WholeBody; 
     public Text textright;
     public Text textleft;

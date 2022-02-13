@@ -14,9 +14,8 @@ public class changeMaterial : MonoBehaviour
     public Material blue;
     public Material yellow;
     public Material black;
-    public GameObject[] Colors;
-    public GameObject[] buttons;
-    public Vector3[] positions;
+    
+    
     
     
     
@@ -25,23 +24,10 @@ public class changeMaterial : MonoBehaviour
     
     void Start()
     {
+        
         cubeRenderer[number] = cube[number].GetComponent<Renderer>();
-        if(number == 1)
-        {
-            Colors[1].SetActive(false);
-            buttons[1].SetActive(false);
-            buttons[0].transform.position = buttons[1].transform.position;
-
-
-            Colors[0].transform.position = positions[0];
-            Colors[2].transform.position = positions[1];
-            Colors[3].transform.position = positions[2];
-            Colors[4].transform.position = positions[3];
-            Colors[5].transform.position = positions[4];
-            Colors[6].transform.position = positions[5];
-
-
-        }
+        
+       
         
 
     }
@@ -50,49 +36,43 @@ public class changeMaterial : MonoBehaviour
     void Update()
     {
         
+        
     }
 
     private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Green")
         {
-            int num = 3;
-            while(num == 0)
-            {
-                num = num - 1;
-            }
-            cubeRenderer[number].material = green;
-
-            
+            Invoke("greenColor", 3);
             
 
             
-            
 
+            
         }
         if (col.gameObject.tag == "Blue")
         {
-            cubeRenderer[number].material = blue;
+            Invoke("blueColor", 3);
 
         }
         if (col.gameObject.tag == "Yellow")
         {
-            cubeRenderer[number].material = yellow;
+            Invoke("yellowColor", 3);
 
         }
         if (col.gameObject.tag == "Red")
         {
-            cubeRenderer[number].material = red;
+            Invoke("redColor", 3);
 
         }
         if (col.gameObject.tag == "Black")
         {
-            cubeRenderer[number].material = black;
+            Invoke("blackColor", 3); ;
 
         }
         if (col.gameObject.tag == "Pink")
         {
-            cubeRenderer[number].material = pink;
+            Invoke("pinkColor", 3);
 
 
         }
@@ -100,4 +80,36 @@ public class changeMaterial : MonoBehaviour
 
 
     }
+    public void greenColor()
+    {
+        cubeRenderer[number].material = green;
+
+    }
+    public void blueColor()
+    {
+        cubeRenderer[number].material = blue;
+
+    }
+    public void yellowColor()
+    {
+        cubeRenderer[number].material = yellow;
+
+    }
+    public void redColor()
+    {
+        cubeRenderer[number].material = red;
+
+    }
+    public void blackColor()
+    {
+        cubeRenderer[number].material = black;
+
+    }
+    public void pinkColor()
+    {
+        cubeRenderer[number].material = pink;
+
+    }
+
+
 }
