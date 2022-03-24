@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>LuzidXR</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.1/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.1/holistic.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js" crossorigin="anonymous"></script>
+  
+  <style>
+    .input_video,
+      video {
+        display: none;
+        /* -webkit-transform: scaleX(-1);
+        transform: scaleX(-1); */
+      }
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
+
+    #unity-canvas {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+    }
+
+    #unity-loading-bar {
+      position: absolute;
+      left: 30%;
+      top: 50%;
+      width: 40%;
+      height: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    #unity-progress-bar {
+      position: absolute;
+      left: 0%;
+      top: 0%;
+      width: 1%;
+      height: 100%;
+      background-color: #ccc;
+      border-radius: 10px;
+      transition: 400ms linear;
+    }
+  </style>
+  <link rel="stylesheet" href="debug-console.css">
+</head>
+
+<body>
+  <script src="./debug-console.js"></script>
+  <canvas id="unity-canvas"></canvas>
+  <div id="unity-loading-bar">
+    <div id="unity-progress-bar">
+    </div>
+  </div>
+  <div class="container">
+    <video class="input_video"></video>
+  </div>
+  <script src="Build/WebGL.loader.js"></script>
+  <script>
+
+    //------------------------------------------------===============================
+    const videoElement = document.getElementsByClassName('input_video')[0];
+      let landmarks
+
+      const pose = new Pose({locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+      }});
+
+      pose.setOptions({
+        modelComplexity: 1,
+        smoothLandmarks: true,
+        enableSegmentation: true,
+        smoothSegmentation: true,
+        minDetectionConfidence: 0.5,
+        minTrackingConfidence: 0.5
+      });
+
+
+      pose.onResults(results => {
+        landmarks = results.poseLandmarks
+      });
+
+      const camera = new Camera(videoElement, {//setting up the camera
+        onFrame: async () => {
+          await pose.send({image: videoElement});
+        },
+        width: 1920,//width of camera input
+        height: 1080//height of camera input
+
+        // can make it repsonsive if needed
+      });
+
+      camera.start();//starting the camera
+
+    //---------------------------------------------------------------============================
+
+    const maxPixelRatioMobile = 2.0;
+    const maxPixelRatioDesktop = 1.5;
+
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var maxDevicePixelRatio = isMobile? maxPixelRatioMobile: maxPixelRatioDesktop;
+    var pixelRatio = Math.min(window.devicePixelRatio, maxDevicePixelRatio);
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/WebGL.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/WebGL.data.unityweb",
+      frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
+      codeUrl: buildUrl + "/WebGL.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "UltraByte",
+      productName: "LuzidXR",
+      productVersion: "0.0.139",
+      devicePixelRatio: pixelRatio
+    };
+
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBar = document.querySelector("#unity-progress-bar");
+
+    var unityGame; // This can be used to access the application with .SendMessage() commands
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = function() {
+      createUnityInstance(canvas, config, function(progress) {
+        progressBar.style.width = 100 * progress + "%";
+      }).then(function(unityInstance) {
+        unityGame = unityInstance;
+        loadingBar.style.display = "none";
+        parent.GlobalUnityInstance  = unityInstance; //add this line
+      }).catch(function(message) {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+
+    //===========================================================================================
+    let id;
+      let id2;
+      window.addEventListener("load", function () {
+        let url = new URLSearchParams(this.location.search);
+        id = url.get("val");
+        console.log(id)
+        id2 = parseInt(id); 
+      });
+
+      var done = false
+      let one = {handposeValues: {one :{x:0,y:0,z:0}}};
+      function draw(){
+        if (landmarks && landmarks.length) {
+          for (let i = 0; i < landmarks.length; i++) {
+            one.handposeValues["data"+i] = {x:30*landmarks[i].x, y:16.875*landmarks[i].y, z:10*landmarks[i].z, w:landmarks[i].visibility}
+            GlobalUnityInstance.SendMessage("DataReceiver","keypointData", JSON.stringify(one.handposeValues));
+          }
+          var meadianX = (landmarks[11].x + landmarks[12].x)/2;
+          var meadianY = (landmarks[11].y + landmarks[12].y)/2;
+          var d = dist(meadianX, meadianY, landmarks[0].x, landmarks[0].y);
+          var distance = {scale:d*5};
+          GlobalUnityInstance.SendMessage("DataReceiver","dist", JSON.stringify(distance));
+        
+          if(done == false){
+            myGreeting(id2);
+            done = true
+          }
+        }
+      }
+      function myGreeting(id2){
+        GlobalUnityInstance.SendMessage("DataReceiver","idReceiver",id2);
+      };
+      //=========================================================================================
+  </script>
+</body>
+
+</html>
