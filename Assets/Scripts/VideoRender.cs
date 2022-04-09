@@ -9,7 +9,7 @@ public class VideoRender : MonoBehaviour
     public GameObject ReqScreen;
     public GameObject mainUIObj;
     WebCamTexture _webcamTexture;
-    bool _enabled;
+    public static bool _enabled = false;
 
     void Start(){
         ReqScreen.SetActive(true);
