@@ -10,8 +10,6 @@ public class DataReceiver : MonoBehaviour
     //all the cloths come under this object
     public GameObject WholeBody; 
 
-    // public Text textright;
-    // public Text textleft;
     //public assignmnet of keypoint data for changing clothes by raising the hand
     public float leftArm;
     public float rightArm;
@@ -40,6 +38,9 @@ public class DataReceiver : MonoBehaviour
     public GameObject sizeCubes;
     public GameObject mainUICubes;
     public GameObject arrowObj;
+    //error massages
+    public GameObject goBackPanel;
+    public GameObject modelLoading;
 
     //------------------------------------------
     public CharacterDatabase characterDB;
@@ -50,6 +51,8 @@ public class DataReceiver : MonoBehaviour
     public static int currentIndex = 0;
     public Slider timerslider;
     //------------------------------
+
+    bool doneLoading = false;
 
     public void dist(string scaleData){
         distData = JsonUtility.FromJson<Distace>(scaleData);
@@ -88,11 +91,6 @@ public class DataReceiver : MonoBehaviour
             rotate = 0;
         }
         WholeBody.transform.localEulerAngles = new Vector3(0, rotate, 0);
-
-        // textright.text = " nosez "+distance;
-        // textleft.text = " right "+pointsData.data12.x;
-        //Camera canvas renderer
-        
         
         //nose
         keyPoints[0].transform.position = new Vector3(-1*pointsData.data0.x, -1*pointsData.data0.y, pointsData.data0.z);
@@ -188,6 +186,13 @@ public class DataReceiver : MonoBehaviour
         }else{
             return;
         }
+
+        //show movefurther notice
+        if(distance > 0.9 && VideoRender._enabled){
+            goBackPanel.SetActive(true);
+        }else{
+            goBackPanel.SetActive(false);
+        }
     }
 
     public class JsonObject{
@@ -225,6 +230,7 @@ public class DataReceiver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //setting default values for the timer
         timerslider.maxValue = timeRemaining;
         timerslider.value = timeRemaining;
 
@@ -269,6 +275,14 @@ public class DataReceiver : MonoBehaviour
             {
                 timeRemaining = 2f;
             }
+        }
+
+        //show until the model is loaded
+        if(distance == 0 && !doneLoading){
+            modelLoading.SetActive(true);
+        }else if (distance != 0){
+            modelLoading.SetActive(false);
+            doneLoading = true;
         }
     }
     //this method is to cahnge the elemnths (t=shirts) to right side

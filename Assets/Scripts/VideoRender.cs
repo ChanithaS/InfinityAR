@@ -5,17 +5,20 @@ using UnityEngine.Video;
 
 public class VideoRender : MonoBehaviour
 {
+    //initalizing video screen objects
     public GameObject videoScreen;
     public GameObject ReqScreen;
     public GameObject mainUIObj;
     WebCamTexture _webcamTexture;
-    bool _enabled;
+    public static bool _enabled = false;
 
     void Start(){
+        //setting the instructions page to true till the button is clicked to get the request
         ReqScreen.SetActive(true);
     }
     public void Enable()
     {
+        //after requst is granted
         _enabled = true;
         ReqScreen.SetActive(false);
         mainUIObj.SetActive(true);
