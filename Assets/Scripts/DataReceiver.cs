@@ -40,7 +40,6 @@ public class DataReceiver : MonoBehaviour
     public GameObject sizeCubes;
     public GameObject mainUICubes;
     public GameObject arrowObj;
-    public GameObject goBackPanel;
 
     //------------------------------------------
     public CharacterDatabase characterDB;
@@ -56,7 +55,6 @@ public class DataReceiver : MonoBehaviour
         distData = JsonUtility.FromJson<Distace>(scaleData);
         distance = distData.scale;
         WholeBody.transform.localScale = new Vector3(distData.scale, distData.scale, distData.scale);
-        // textright.text = distance.ToString();
     }
 
     public void idReceiver(int idData){
@@ -90,6 +88,10 @@ public class DataReceiver : MonoBehaviour
             rotate = 0;
         }
         WholeBody.transform.localEulerAngles = new Vector3(0, rotate, 0);
+
+        // textright.text = " nosez "+distance;
+        // textleft.text = " right "+pointsData.data12.x;
+        //Camera canvas renderer
         
         
         //nose
@@ -152,12 +154,6 @@ public class DataReceiver : MonoBehaviour
         nose = pointsData.data0.y*-1;
         leftArm = pointsData.data15.y*-1;
         rightArm = pointsData.data16.y*-1;
-
-        if(distance > 0.9 && VideoRender._enabled){
-            goBackPanel.SetActive(true);
-        }else{
-            goBackPanel.SetActive(false);
-        }
 
         //keeping the size and color objects in same distance to user so they can reach out to them
         //Z-Axis of the hand and x,y axis of the shoulders are assigned
